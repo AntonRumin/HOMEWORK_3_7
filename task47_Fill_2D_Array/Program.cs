@@ -26,11 +26,6 @@ int GetNumber(string msg)
     return result;
 }
 
-int row = GetNumber ("Введите число строк в двумерном массиве: ");
-int column = GetNumber ("Введите число столбцов в двумерном массиве: ");
-int left = GetNumber ("Введите нижнюю границу случайных значений элементов массива: ");
-int rigth = GetNumber ("Введите верхнюю границу случайных значений элементов массива: ");
-
 double[ , ] InitArray(int line, int bar, int low, int high)
 {
     double[ , ] arr = new double [line, bar];
@@ -44,21 +39,35 @@ double[ , ] InitArray(int line, int bar, int low, int high)
         arr[i,j] =(rnd.NextDouble() + rnd.Next (low, high+1));
         }
     }
-
     return arr;
 }
 
-void PrintArray(double[ , ] array)
+void PrintArray(double[ , ] array, int round)
 {
     for (int i = 0; i < array.GetLength(0); i++)
     {
        for (int j=0; j < array.GetLength (1); j++)
         {
-          Console.Write($"{array[i,j]} ");
+          Console.Write(Math.Round(array[i,j], round) + "  ");
         }
         Console.WriteLine();
     }
     
 }
+
+int row = GetNumber ("Введите число строк в двумерном массиве: ");
+int column = GetNumber ("Введите число столбцов в двумерном массиве: ");
+int left = GetNumber ("Введите нижнюю границу случайных значений элементов массива: ");
+int rigth = 0;
+
+while (true)
+{
+rigth = GetNumber ("Введите верхнюю границу случайных значений элементов массива: ");
+
+    if (left < rigth) break;
+    else Console.WriteLine("Верхняя граница значений не может быть меньше или равна нижней границе. Повторите ввод");
+}
+int digit = GetNumber("Введите число знаков после запятой (для округления случайного вещественного числа): ");
+
 double [ , ] RandomArray = InitArray(row, column, left, rigth);
-PrintArray (RandomArray);
+PrintArray (RandomArray, digit);
